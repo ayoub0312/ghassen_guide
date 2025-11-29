@@ -1,0 +1,231 @@
+.reviews-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid #eee;
+}
+
+.reviews-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+}
+
+/* Reviews List */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.review-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.reviewer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reviewer-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+}
+
+.reviewer-name {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.review-date {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.review-text {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.no-reviews {
+    color: #888;
+    font-style: italic;
+}
+
+/* Write Review */
+.write-review {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 16px;
+}
+
+.write-review h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.login-prompt {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.google-sim-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.google-sim-btn:hover {
+    background-color: #f7fafe;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-color: #d2e3fc;
+}
+
+.google-sim-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+.note-text {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 0.5rem;
+}
+
+/* Form */
+.review-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.user-avatar-small {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.sign-out-link {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: auto;
+}
+
+.rating-input {
+    margin-bottom: 1.5rem;
+}
+
+.rating-input label,
+.comment-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.stars-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s;
+}
+
+.star-btn:hover {
+    transform: scale(1.1);
+}
+
+.comment-input textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.submit-review-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.3s;
+}
+
+.submit-review-btn:hover {
+    background: #0096c7;
+    transform: translateY(-2px);
+}
+
+.submit-review-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
