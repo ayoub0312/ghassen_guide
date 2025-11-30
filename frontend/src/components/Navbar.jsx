@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, Globe, DollarSign } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useCurrency } from '../context/CurrencyContext';
 import './Navbar.css';
 import ghassenLogo from '../assets/ghassen-logo.png';
 
-const Navbar = ({ currentCurrency, onCurrencyChange }) => {
+const Navbar = () => {
     const { t, i18n } = useTranslation();
+    const { currentCurrency, setCurrentCurrency } = useCurrency();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
@@ -63,7 +65,7 @@ const Navbar = ({ currentCurrency, onCurrencyChange }) => {
     };
 
     const changeCurrency = (curr) => {
-        onCurrencyChange(curr);
+        setCurrentCurrency(curr);
         setCurrencyDropdownOpen(false);
         setIsOpen(false);
     };

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VideoShowcase from './components/VideoShowcase';
 import Activities from './components/Activities';
 import Footer from './components/Footer';
-import { fetchRates } from './utils/currencyUtils';
+import { CurrencyProvider } from './context/CurrencyContext';
 import './App.css';
 
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
@@ -25,69 +25,52 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-    const [currentCurrency, setCurrentCurrency] = useState('TND');
-    const [rates, setRates] = useState(null);
     const location = useLocation();
     const isAdminRoute = location.pathname.startsWith('/admin');
 
-    useEffect(() => {
-        const getRates = async () => {
-            const fetchedRates = await fetchRates();
-            setRates(fetchedRates);
-        };
-        getRates();
-    }, []);
-
     return (
-        <div className="app">
-            <Preloader />
-            {!isAdminRoute && (
-                <Navbar
-                    currentCurrency={currentCurrency}
-                    onCurrencyChange={setCurrentCurrency}
-                />
-            )}
+        <CurrencyProvider>
+            <div className="app">
+                <Preloader />
+                {!isAdminRoute && (
+                    <Navbar />
+                )}
 
-            <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={
-                    <>
-                        <Hero />
-                        <VideoShowcase />
-                        <Activities
-                            currentCurrency={currentCurrency}
-                            rates={rates}
-                        />
-                    </>
-                } />
-                <Route path="/activity/:id" element={
-                    <ActivityDetails
-                        currentCurrency={currentCurrency}
-                        rates={rates}
-                    />
-                } />
+                <Routes>
+                    {/* Public Routes */}
+                    <Route path="/" element={
+                        <>
+                            <Hero />
+                            <VideoShowcase />
+                            <Activities />
+                        </>
+                    } />
+                    <Route path="/activity/:id" element={
+                        <ActivityDetails />
+                    } />
 
-                {/* Admin Routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={
-                    <ProtectedRoute>
-                        <AdminDashboard />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin/activities" element={
-                    <ProtectedRoute>
-                        <ActivitiesManager />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin/reservations" element={
-                    <ProtectedRoute>
-                        <ReservationsManager />
-                    </ProtectedRoute>
-                } />
-            </Routes>
+                    {/* Admin Routes */}
+                    <Route path="/admin/login" element={<AdminLogin />} />
+                    <Route path="/admin/dashboard" element={
+                        <ProtectedRoute>
+                            <AdminDashboard />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/admin/activities" element={
+                        <ProtectedRoute>
+                            <ActivitiesManager />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/admin/reservations" element={
+                        <ProtectedRoute>
+                            <ReservationsManager />
+                        </ProtectedRoute>
+                    } />
+                </Routes>
 
-            {!isAdminRoute && <Footer />}
-        </div>
+                {!isAdminRoute && <Footer />}
+            </div>
+        </CurrencyProvider>
     );
 }
 
