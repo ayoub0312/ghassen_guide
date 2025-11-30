@@ -5,6 +5,15 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 
+// Initialize Firebase Admin
+const { initializeFirebase } = require('./config/firebase-admin-config');
+try {
+  initializeFirebase();
+} catch (error) {
+  console.error('⚠️  Warning: Firebase not initialized. Please configure Firebase credentials.');
+  console.error('   The server will start but Firebase features will not work.');
+}
+
 const activitiesRoutes = require('./routes/activities');
 const reservationsRoutes = require('./routes/reservations');
 const currencyRoutes = require('./routes/currency');
@@ -20,19 +29,13 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Configure Multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    // Keep original extension
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+// Configure Multer for file uploads (Memory Storage for Firebase)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
   }
 });
-
-const upload = multer({ storage: storage });
 
 // Middleware
 app.use(cors());
@@ -40,12 +43,23 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Upload Endpoint
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded' });
+app.post('/api/upload', upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const firebaseService = require('./services/firebaseService');
+    const result = await firebaseService.uploadFile(req.file, 'activities');
+
+    res.json({
+      imageUrl: result.url,
+      filename: result.filename
+    });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ message: 'Error uploading file', error: error.message });
   }
-  const imageUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
-  res.json({ imageUrl, filename: req.file.filename });
 });
 
 // Routes

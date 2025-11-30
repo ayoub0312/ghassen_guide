@@ -1,60 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const { readJSONFile, writeJSONFile } = require('../utils/fileUtils');
-
-const RESERVATIONS_FILE = 'reservations.json';
+const firebaseService = require('../services/firebaseService');
 
 // Get all reservations
-router.get('/', (req, res) => {
-    const reservations = readJSONFile(RESERVATIONS_FILE);
-    // Sort by date descending
-    reservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    res.json(reservations);
+router.get('/', async (req, res) => {
+    try {
+        const reservations = await firebaseService.getAllReservations();
+        res.json(reservations);
+    } catch (error) {
+        console.error('Error fetching reservations:', error);
+        res.status(500).json({ message: 'Error fetching reservations', error: error.message });
+    }
 });
 
 // Create new reservation
-router.post('/', (req, res) => {
-    const reservations = readJSONFile(RESERVATIONS_FILE);
-
-    const newReservation = {
-        id: Date.now(),
-        ...req.body,
-        status: 'pending', // Default status
-        createdAt: new Date().toISOString()
-    };
-
-    reservations.push(newReservation);
-
-    if (writeJSONFile(RESERVATIONS_FILE, reservations)) {
+router.post('/', async (req, res) => {
+    try {
+        const newReservation = await firebaseService.createReservation(req.body);
         res.status(201).json(newReservation);
-    } else {
-        res.status(500).json({ message: 'Error saving reservation' });
+    } catch (error) {
+        console.error('Error creating reservation:', error);
+        res.status(500).json({ message: 'Error creating reservation', error: error.message });
     }
 });
 
 // Update reservation status
-router.put('/:id/status', (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
+router.put('/:id/status', async (req, res) => {
+    try {
+        const { status } = req.body;
 
-    if (!status) {
-        return res.status(400).json({ message: 'Status is required' });
-    }
+        if (!status) {
+            return res.status(400).json({ message: 'Status is required' });
+        }
 
-    const reservations = readJSONFile(RESERVATIONS_FILE);
-    const index = reservations.findIndex(r => r.id.toString() === id.toString());
+        const updatedReservation = await firebaseService.updateReservationStatus(req.params.id, status);
 
-    if (index === -1) {
-        return res.status(404).json({ message: 'Reservation not found' });
-    }
+        if (!updatedReservation) {
+            return res.status(404).json({ message: 'Reservation not found' });
+        }
 
-    reservations[index].status = status;
-    reservations[index].updatedAt = new Date().toISOString();
-
-    if (writeJSONFile(RESERVATIONS_FILE, reservations)) {
-        res.json(reservations[index]);
-    } else {
-        res.status(500).json({ message: 'Error updating reservation' });
+        res.json(updatedReservation);
+    } catch (error) {
+        console.error('Error updating reservation:', error);
+        res.status(500).json({ message: 'Error updating reservation', error: error.message });
     }
 });
 

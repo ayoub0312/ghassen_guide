@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "name": "Balade en Quad",
+    "description": {
+      "fr": "Découvrez Djerba à travers une aventure excitante en quad.",
+      "en": "Discover Djerba through an exciting quad biking adventure.",
+      "ar": "اكتشف جربة من خلال مغامرة مثيرة بالدراجات الرباعية.",
+      "it": "Scopri Djerba attraverso un'emozionante avventura in quad.",
+      "pl": "Odkryj Dżerbę podczas ekscytującej przygody na quadach.",
+      "de": "Entdecken Sie Djerba bei einem aufregenden Quad-Abenteuer.",
+      "es": "Descubre Djerba a través de una emocionante aventura en quad."
+    },
+    "price": 50,
+    "currency": "TND",
+    "duration": "2h",
+    "image": "quad.jpg",
+    "reviews": []
+  },
+  {
+    "id": 2,
+    "name": "Jet Ski",
+    "description": {
+      "fr": "Sensations fortes garanties avec nos jet skis sur les eaux bleues de Djerba.",
+      "en": "Thrills guaranteed with our jet skis on the blue waters of Djerba.",
+      "ar": "إثارة مضمونة مع دراجاتنا المائية في مياه جربة الزرقاء.",
+      "it": "Emozioni garantite con le nostre moto d'acqua sulle acque blu di Djerba.",
+      "pl": "Gwarantowane emocje na naszych skuterach wodnych na błękitnych wodach Dżerby.",
+      "de": "Nervenkitzel garantiert mit unseren Jetskis auf dem blauen Wasser von Djerba.",
+      "es": "Emociones garantizadas con nuestras motos de agua en las aguas azules de Djerba."
+    },
+    "price": 80,
+    "currency": "TND",
+    "duration": "30min",
+    "image": "jetski.jpg",
+    "reviews": [
+      {
+        "id": 1764426726157,
+        "user": "Demo User",
+        "rating": 5,
+        "comment": "jkhmhohoihoih",
+        "avatar": null,
+        "date": "2025-11-29T14:32:06.158Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Balade en Dromadaire",
+    "description": {
+      "fr": "Promenade paisible à dos de dromadaire au coucher du soleil.",
+      "en": "Peaceful camel ride at sunset.",
+      "ar": "ركوب الجمل الهادئ عند غروب الشمس.",
+      "it": "Tranquilla passeggiata a dorso di cammello al tramonto.",
+      "pl": "Spokojna przejażdżka na wielbłądzie o zachodzie słońca.",
+      "de": "Friedlicher Kamelritt bei Sonnenuntergang.",
+      "es": "Paseo tranquilo en camello al atardecer."
+    },
+    "price": 30,
+    "currency": "TND",
+    "duration": "1h30",
+    "image": "camel.jpg",
+    "reviews": []
+  },
+  {
+    "id": 4,
+    "name": "Tour du Fort de Guellala",
+    "description": {
+      "fr": "Visite historique du célèbre fort de Guellala et son musée.",
+      "en": "Historical tour of the famous Guellala Fort and its museum.",
+      "ar": "جولة تاريخية في حصن قلالة الشهير ومتحفه.",
+      "it": "Tour storico del famoso Forte di Guellala e del suo museo.",
+      "pl": "Historyczna wycieczka po słynnym forcie Guellala i jego muzeum.",
+      "de": "Historische Tour durch das berühmte Fort Guellala und sein Museum.",
+      "es": "Recorrido histórico por el famoso Fuerte de Guellala y su museo."
+    },
+    "price": 25,
+    "currency": "TND",
+    "duration": "2h",
+    "image": "fort.jpg",
+    "reviews": []
+  },
+  {
+    "id": 5,
+    "name": "Journée Bateau Pirate",
+    "description": {
+      "fr": "Une journée inoubliable en mer avec animation et déjeuner inclus.",
+      "en": "An unforgettable day at sea with entertainment and lunch included.",
+      "ar": "يوم لا ينسى في البحر مع الترفيه والغداء مشمول.",
+      "it": "Una giornata indimenticabile in mare con animazione e pranzo inclusi.",
+      "pl": "Niezapomniany dzień na morzu z rozrywką i lunchem w cenie.",
+      "de": "Ein unvergesslicher Tag auf See mit Unterhaltung und Mittagessen inklusive.",
+      "es": "Un día inolvidable en el mar con entretenimiento y almuerzo incluido."
+    },
+    "price": 60,
+    "currency": "TND",
+    "duration": "6h",
+    "image": "pirate_ship.jpg",
+    "reviews": []
+  },
+  {
+    "id": 6,
+    "name": "Plongée Sous-Marine",
+    "description": {
+      "fr": "Explorez les fonds marins de Djerba avec nos moniteurs certifiés.",
+      "en": "Explore the seabed of Djerba with our certified instructors.",
+      "ar": "اكتشف قاع البحر في جربة مع مدربينا المعتمدين.",
+      "it": "Esplora i fondali marini di Djerba con i nostri istruttori certificati.",
+      "pl": "Odkryj dno morskie Dżerby z naszymi certyfikowanymi instruktorami.",
+      "de": "Erkunden Sie den Meeresboden von Djerba mit unseren zertifizierten Tauchlehrern.",
+      "es": "Explora el fondo marino de Djerba con nuestros instructores certificados."
+    },
+    "price": 100,
+    "currency": "TND",
+    "duration": "3h",
+    "image": "diving.jpg",
+    "reviews": []
+  },
+  {
+    "id": 7,
+    "name": "Parachute Ascensionnel",
+    "description": {
+      "fr": "Survolez les eaux turquoise de Djerba en parachute ascensionnel pour une vue imprenable.",
+      "en": "Fly over the turquoise waters of Djerba in a parasail for breathtaking views.",
+      "ar": "حلق فوق مياه جربة الفيروزية بالمظلة الشراعية للحصول على مناظر خلابة.",
+      "it": "Sorvola le acque turchesi di Djerba in parasailing per viste mozzafiato.",
+      "pl": "Przelatuj nad turkusowymi wodami Dżerby na paralotni, aby podziwiać zapierające dech w piersiach widoki.",
+      "de": "Fliegen Sie mit dem Parasail über das türkisfarbene Wasser von Djerba für atemberaubende Aussichten.",
+      "es": "Sobrevuela las aguas turquesas de Djerba en paracaídas ascensional para vistas impresionantes."
+    },
+    "price": 70,
+    "currency": "TND",
+    "duration": "20min",
+    "image": "parasailing.jpg",
+    "reviews": []
+  },
+  {
+    "id": 8,
+    "name": "Balade à Cheval",
+    "description": {
+      "fr": "Explorez les plages et les paysages de Djerba à cheval pour une expérience unique.",
+      "en": "Explore the beaches and landscapes of Djerba on horseback for a unique experience.",
+      "ar": "استكشف شواطئ ومناظر جربة على ظهر الخيل للحصول على تجربة فريدة.",
+      "it": "Esplora le spiagge e i paesaggi di Djerba a cavallo per un'esperienza unica.",
+      "pl": "Odkryj plaże i krajobrazy Dżerby konno, aby przeżyć wyjątkowe doświadczenie.",
+      "de": "Erkunden Sie die Strände und Landschaften von Djerba zu Pferd für ein einzigartiges Erlebnis.",
+      "es": "Explora las playas y paisajes de Djerba a caballo para una experiencia única."
+    },
+    "price": 40,
+    "currency": "TND",
+    "duration": "1h",
+    "image": "horse_riding.jpg",
+    "reviews": []
+  },
+  {
+    "id": 9,
+    "name": "tour de lile",
+    "description": {
+      "fr": "tour de lile fair  une tour pour toute le lile",
+      "en": "fsdff",
+      "ar": "fdsfsfd",
+      "it": "",
+      "pl": "",
+      "de": "",
+      "es": ""
+    },
+    "price": 150,
+    "currency": "TND",
+    "duration": "5h",
+    "image": "http://localhost:3001/uploads/1764425942306-459126908.webp",
+    "reviews": []
+  }
+]
