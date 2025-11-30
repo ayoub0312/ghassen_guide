@@ -1,103 +1,145 @@
-alert('Failed to update status');
+import React, { useState, useEffect } from 'react';
+import { Search, Download } from 'lucide-react';
+import { getApiUrl } from '../../config/api';
+import './ReservationsManager.css';
+
+const ReservationsManager = () => {
+    const [reservations, setReservations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        fetchReservations();
+    }, []);
+
+    const fetchReservations = async () => {
+        try {
+            const response = await fetch(getApiUrl('reservations'));
+            const data = await response.json();
+            setReservations(data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching reservations:', error);
+            setLoading(false);
         }
     };
 
-const filteredReservations = reservations.filter(res => {
-    const matchesStatus = filterStatus === 'all' || res.status === filterStatus;
-    const matchesSearch =
-        res.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        res.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        res.activityName.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesStatus && matchesSearch;
-});
+    const handleStatusChange = async (id, newStatus) => {
+        try {
+            await fetch(getApiUrl(`reservations/${id}/status`), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+            // Optimistic update
+            setReservations(prev => prev.map(res =>
+                res.id === id ? { ...res, status: newStatus } : res
+            ));
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Failed to update status');
+        }
+    };
 
-if (loading) return <div className="loading-spinner">Loading reservations...</div>;
+    const filteredReservations = reservations.filter(res => {
+        const matchesStatus = filterStatus === 'all' || res.status === filterStatus;
+        const matchesSearch =
+            res.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            res.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            res.activityName.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesStatus && matchesSearch;
+    });
 
-return (
-    <div className="reservations-manager">
-        <div className="manager-header">
-            <h1>Reservations</h1>
-            <button className="add-btn" style={{ background: '#10b981' }}>
-                <Download size={20} />
-                Export CSV
-            </button>
-        </div>
+    if (loading) return <div className="loading-spinner">Loading reservations...</div>;
 
-        <div className="filters-bar">
-            <div style={{ position: 'relative', flex: 1 }}>
-                <Search size={20} style={{ position: 'absolute', left: '12px', top: '12px', color: '#999' }} />
-                <input
-                    type="text"
-                    placeholder="Search by name, email or activity..."
-                    className="search-input"
-                    style={{ paddingLeft: '40px' }}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
+    return (
+        <div className="reservations-manager">
+            <div className="manager-header">
+                <h1>Reservations</h1>
+                <button className="add-btn" style={{ background: '#10b981' }}>
+                    <Download size={20} />
+                    Export CSV
+                </button>
             </div>
-            <select
-                className="filter-select"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-            >
-                <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="cancelled">Cancelled</option>
-            </select>
-        </div>
 
-        <div className="reservations-table-container">
-            <table className="reservations-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer</th>
-                        <th>Activity</th>
-                        <th>Date</th>
-                        <th>Participants</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredReservations.map(res => (
-                        <tr key={res.id}>
-                            <td>#{res.id.toString().slice(-6)}</td>
-                            <td className="customer-info">
-                                <div>{res.name}</div>
-                                <div>{res.email}</div>
-                                <div style={{ fontSize: '0.8rem', color: '#666' }}>{res.phone}</div>
-                            </td>
-                            <td>{res.activityName}</td>
-                            <td>{new Date(res.date).toLocaleDateString()}</td>
-                            <td>{res.participants}</td>
-                            <td style={{ fontWeight: 600 }}>{res.totalPrice} {res.currency}</td>
-                            <td>
-                                <select
-                                    className={`status-select ${res.status || 'pending'}`}
-                                    value={res.status || 'pending'}
-                                    onChange={(e) => handleStatusChange(res.id, e.target.value)}
-                                >
-                                    <option value="pending">Pending</option>
-                                    <option value="confirmed">Confirmed</option>
-                                    <option value="cancelled">Cancelled</option>
-                                </select>
-                            </td>
-                        </tr>
-                    ))}
-                    {filteredReservations.length === 0 && (
+            <div className="filters-bar">
+                <div style={{ position: 'relative', flex: 1 }}>
+                    <Search size={20} style={{ position: 'absolute', left: '12px', top: '12px', color: '#999' }} />
+                    <input
+                        type="text"
+                        placeholder="Search by name, email or activity..."
+                        className="search-input"
+                        style={{ paddingLeft: '40px' }}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                <select
+                    className="filter-select"
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <div className="reservations-table-container">
+                <table className="reservations-table">
+                    <thead>
                         <tr>
-                            <td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#888' }}>
-                                No reservations found matching your filters.
-                            </td>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Activity</th>
+                            <th>Date</th>
+                            <th>Participants</th>
+                            <th>Total</th>
+                            <th>Status</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredReservations.map(res => (
+                            <tr key={res.id}>
+                                <td>#{res.id.toString().slice(-6)}</td>
+                                <td className="customer-info">
+                                    <div>{res.name}</div>
+                                    <div>{res.email}</div>
+                                    <div style={{ fontSize: '0.8rem', color: '#666' }}>{res.phone}</div>
+                                </td>
+                                <td>{res.activityName}</td>
+                                <td>{new Date(res.date).toLocaleDateString()}</td>
+                                <td>{res.participants}</td>
+                                <td style={{ fontWeight: 600 }}>{res.totalPrice} {res.currency}</td>
+                                <td>
+                                    <select
+                                        className={`status-select ${res.status || 'pending'}`}
+                                        value={res.status || 'pending'}
+                                        onChange={(e) => handleStatusChange(res.id, e.target.value)}
+                                    >
+                                        <option value="pending">Pending</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        ))}
+                        {filteredReservations.length === 0 && (
+                            <tr>
+                                <td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#888' }}>
+                                    No reservations found matching your filters.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default ReservationsManager;
