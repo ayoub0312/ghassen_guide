@@ -11,14 +11,14 @@ import ReservationModal from './ReservationModal';
 import './ActivityDetails.css';
 
 // Import images
-import quadImg from '../assets/images/quad.jpg';
-import jetSkiImg from '../assets/images/jetski.jpg';
-import camelImg from '../assets/images/camel.jpg';
-import fortImg from '../assets/images/fort.jpg';
-import pirateShipImg from '../assets/images/pirate-ship.jpg';
-import divingImg from '../assets/images/diving.jpg';
-import parasailingImg from '../assets/images/parasailing.jpg';
-import horseRidingImg from '../assets/images/horse-riding.jpg';
+import quadImg from '../assets/activity_quad_biking.png';
+import jetSkiImg from '../assets/activity_jet_skiing.png';
+import camelImg from '../assets/activity_camel_riding.png';
+import fortImg from '../assets/activity_fort.png';
+import pirateShipImg from '../assets/activity_pirate_ship.png';
+import divingImg from '../assets/activity_diving.png';
+import parasailingImg from '../assets/activity_parasailing.png';
+import horseRidingImg from '../assets/activity_horse_riding.png';
 
 const ActivityDetails = () => {
     const { id } = useParams();
