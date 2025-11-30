@@ -18,20 +18,34 @@ function initializeFirebase() {
             return { db, storage };
         }
 
-        // Get service account path - use absolute path resolution
-        const serviceAccountPath = path.resolve(__dirname, 'serviceAccountKey.json');
-
-        // Try to load service account
         let serviceAccount;
-        try {
-            serviceAccount = require(serviceAccountPath);
-        } catch (error) {
-            console.error('❌ Error loading service account key:', error.message);
-            console.log('📝 Please download your service account key from Firebase Console:');
-            console.log('   1. Go to Firebase Console > Project Settings > Service Accounts');
-            console.log('   2. Click "Generate new private key"');
-            console.log(`   3. Save the file as: ${serviceAccountPath}`);
-            throw new Error('Service account key not found');
+
+        // Try to load from environment variable first (for production/Render)
+        if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+            try {
+                serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+                console.log('✅ Using Firebase credentials from environment variable');
+            } catch (error) {
+                console.error('❌ Error parsing FIREBASE_SERVICE_ACCOUNT:', error.message);
+                throw new Error('Invalid JSON in FIREBASE_SERVICE_ACCOUNT environment variable');
+            }
+        } else {
+            // Fallback to local file (for development)
+            const serviceAccountPath = path.resolve(__dirname, 'serviceAccountKey.json');
+            try {
+                serviceAccount = require(serviceAccountPath);
+                console.log('✅ Using Firebase credentials from local file');
+            } catch (error) {
+                console.error('❌ Error loading service account key:', error.message);
+                console.log('📝 Please either:');
+                console.log('   1. Set FIREBASE_SERVICE_ACCOUNT environment variable with your service account JSON');
+                console.log('   OR');
+                console.log('   2. Download your service account key from Firebase Console:');
+                console.log('      - Go to Firebase Console > Project Settings > Service Accounts');
+                console.log('      - Click "Generate new private key"');
+                console.log(`      - Save the file as: ${serviceAccountPath}`);
+                throw new Error('Service account key not found');
+            }
         }
 
         // Initialize Firebase Admin
